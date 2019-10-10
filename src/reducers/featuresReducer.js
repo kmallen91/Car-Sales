@@ -21,15 +21,20 @@ const initialState = {
       console.log(action, state)
       switch(action.type) {
           case ADD_FEATURE:
-              const features = state.car.features
-              const newFeature = {
-                  name: action.payload.name,
-                  id: action.payload.id,
-                  price: action.payload.price
-              }
+            console.log(action.payload)
+            //   const features = state.car.features
+              const newFeature = state.car.store.find(item => item.id === action.payload.id )
+              const newStore = state.store.filter(item => {
+                    return item.id !== action.payload.id
+                })
               return {
                   ...state,
-                  features: [...features, newFeature]
+                  additionalPrice: state.additionalPrice += action.payload.price,
+                  car: {...state.car, 
+                    features:[...state.car.features, newFeature],
+                     },
+                  store: [...newStore] 
+
               }
           default:
               return state
