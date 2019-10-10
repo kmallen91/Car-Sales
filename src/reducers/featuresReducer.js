@@ -23,7 +23,7 @@ const initialState = {
           case ADD_FEATURE:
             console.log(action.payload)
             //   const features = state.car.features
-              const newFeature = state.car.store.find(item => item.id === action.payload.id )
+              const newFeature = state.store.find(item => item.id === action.payload.id )
               const newStore = state.store.filter(item => {
                     return item.id !== action.payload.id
                 })
@@ -36,6 +36,19 @@ const initialState = {
                   store: [...newStore] 
 
               }
+          case REMOVE_FEATURE:
+              const deleteFeature = state.car.features.remove(item => item.id === action.payload.id )
+              const newStore = state.car.features.filter(item => {
+                    return item.id !== state.store.id
+                })
+              return {
+                  ...state,
+                  additionalPrice: state.additionalPrice += action.payload.price,
+                  car: {...state.car, 
+                    features:[...state.car.features, deleteFeature],
+                     },
+                  store: [...newStore]
+                    }
           default:
               return state
       }
